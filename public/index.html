@@ -11,6 +11,7 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <!-- Tell iOS it's a PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <!-- Make sure theme-color is defined -->
@@ -35,8 +36,10 @@
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register('/sw.js')
-        .then(function () { console.log("Service Worker Registered!!!"); });
+        .register('/sw.js', { cache: false })
+        .then(function () {
+          console.log("Service Worker Registered!!!");
+        });
     }
   </script>
   <!--
