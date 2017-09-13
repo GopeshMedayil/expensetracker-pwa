@@ -1,44 +1,57 @@
 import React, { Component } from 'react';
-import { Button, Card, CardText, CardTitle, CardActions, CardMenu, IconButton, Grid, Cell } from 'react-mdl';
+import db from './utils/db';
 class DashBoard extends Component {
+    constructor() {
+        super();
+        this.state = { expenses: [], income: [] };
+    }
+    componentDidMount() {
+        console.log('Component DID MOUNT!');
+        db.table('expenses')
+            .toArray()
+            .then((expenses) => {
+                console.log("expenses", expenses)
+                this.setState({ expenses });
+            });
+        db.table('income')
+            .toArray()
+            .then((income) => {
+                console.log("income", income)
+                this.setState({ income });
+            });
+
+    }
     render() {
         return (
             <div className="dashboardContainer">
                 <h4>Our Expenses</h4>
                 <span><i>August 23,2017</i></span>
-                <Grid className="demo-grid-3">
-                    <Cell col={6} tablet={6} phone={12}>
-                        <Card shadow={0} >
-                            <CardTitle style={{ color: '#fff', height: '176px' }}>Welcome</CardTitle>
-                            <CardText>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Mauris sagittis pellentesque lacus eleifend lacinia...
-    </CardText>
-                            <CardActions border>
-                                <Button colored>Get Started</Button>
-                            </CardActions>
-                            <CardMenu style={{ color: '#fff' }}>
-                                <IconButton name="share" />
-                            </CardMenu>
-                        </Card>
-                    </Cell>
-                    <Cell col={6} tablet={6} phone={12}>
-                        <Card shadow={0} >
-                            <CardTitle style={{ color: '#fff', height: '176px' }}>Welcome</CardTitle>
-                            <CardText>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Mauris sagittis pellentesque lacus eleifend lacinia...
-    </CardText>
-                            <CardActions border>
-                                <Button colored>Get Started</Button>
-                            </CardActions>
-                            <CardMenu style={{ color: '#fff' }}>
-                                <IconButton name="share" />
-                            </CardMenu>
-                        </Card>
-                    </Cell>
+                {
+                    this.state.expenses.map(expenses => {
+                        return (
+                            <div key={expenses.id}>
+                                <ul>
+                                    <li>{expenses.expensedesc}-- {expenses.expenseamount}</li>
+                                </ul>
+                            </div>
+                        )
+                    })
+                }
 
-                </Grid >
+                <div>
+                    income<hr />
+                    {
+                        this.state.income.map(income => {
+                            return (
+                                <div key={income.id}>
+                                    <ul>
+                                        <li>{income.incomedesc}-- {income.incomeamount}</li>
+                                    </ul>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
 
             </div >
         );
