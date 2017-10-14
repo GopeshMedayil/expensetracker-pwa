@@ -1,23 +1,37 @@
 import React, { Component } from 'react';
 import db from './utils/db';
+import moment from 'moment';
 class DashBoard extends Component {
     constructor() {
         super();
         this.state = { expenses: [], income: [] };
     }
     componentDidMount() {
-        console.log('Component DID MOUNT!');
-        db.table('expenses')
-            .toArray()
-            .then((expenses) => {
-                console.log("expenses", expenses)
-                this.setState({ expenses });
+        var startDate = moment().startOf('month').subtract(1, "days").format('YYYY-MM-DD');
+        var endDate = moment().endOf('month').add(1, "days").format('YYYY-MM-DD');
+        var expenseTotal = 0;
+        var incomeTotal = 0;
+        db.table('expenses').where('expensedate').between(startDate, endDate).toArray().then((expenses) => {
+            expenses.map(function (value) {
+                expenseTotal += value.expenseamount
             });
-        db.table('income')
+            console.log("Expense Amount", expenseTotal)
+            this.setState({ expenseTotal });
+        });
+        // db.table('expenses')
+        //     .toArray()
+        //     .then((expenses) => {
+        //         console.log("expenses", expenses);
+
+        //     });
+        db.table('income').where('incomedate').between(startDate, endDate)
             .toArray()
             .then((income) => {
-                console.log("income", income)
-                this.setState({ income });
+                income.map(function (value) {
+                    incomeTotal += value.incomeamount
+                });
+                console.log("incomeTotal", incomeTotal)
+                this.setState({ incomeTotal });
             });
 
     }
@@ -26,31 +40,11 @@ class DashBoard extends Component {
             <div className="dashboardContainer">
                 <h4>Our Expenses</h4>
                 <span><i>August 23,2017</i></span>
-                {
-                    this.state.expenses.map(expenses => {
-                        return (
-                            <div key={expenses.id}>
-                                <ul>
-                                    <li>{expenses.expensedesc}-- {expenses.expenseamount}</li>
-                                </ul>
-                            </div>
-                        )
-                    })
-                }
+                <div>{this.state.expenseTotal}</div>
 
                 <div>
-                    income<hr />
-                    {
-                        this.state.income.map(income => {
-                            return (
-                                <div key={income.id}>
-                                    <ul>
-                                        <li>{income.incomedesc}-- {income.incomeamount}</li>
-                                    </ul>
-                                </div>
-                            )
-                        })
-                    }
+                    Income<hr />
+                    <div>{this.state.incomeTotal}</div>
                 </div>
 
             </div >

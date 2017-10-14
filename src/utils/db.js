@@ -9,22 +9,37 @@ db.version(2).stores({
 });
 db.expenses.add({
     expenseamount: 100,
-    expensedate: "13-09-2017",
+    expensedate: "2017-10-01",
+    category: 2,
+    expensedesc: "Food",
+}).catch(function (err) {
+    console.log("error", err);
+});
+db.expenses.add({
+    expenseamount: 500,
+    expensedate: "2017-10-30",
     category: 2,
     expensedesc: "Food",
 }).catch(function (err) {
     console.log("error", err);
 });
 db.income.add({
-    incomeamount: 100,
-    incomedate: "10-09-2017",
+    incomeamount: 1500,
+    incomedate: "2017-10-01",
+    category: 2,
+    incomedesc: "Salary",
+}).catch(function (err) {
+    console.log("error", err);
+});
+db.income.add({
+    incomeamount: 5000,
+    incomedate: "2017-10-05",
     category: 2,
     incomedesc: "Salary",
 }).catch(function (err) {
     console.log("error", err);
 });
 
-// income: 'incomeamount,incomedate,incomedesc,category',
-// category: 'name,desc'
+
 
 export default db;
