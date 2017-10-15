@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import db from './utils/db';
 import moment from 'moment';
 class DashBoard extends Component {
@@ -39,6 +40,7 @@ class DashBoard extends Component {
         return (
             <div className="dashboardContainer">
                 <h4>Our Expenses</h4>
+                <Link to={`/expenses`}>Expense List</Link>
                 <span><i>August 23,2017</i></span>
                 <div>{this.state.expenseTotal}</div>
 
