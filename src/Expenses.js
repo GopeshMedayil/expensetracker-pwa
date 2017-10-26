@@ -28,13 +28,17 @@ export default class Expenses extends Component {
         return (
             <div>
                 Expense List !!!
-                {this.state.expenseList.map(function (expense) {
-                    return <p>{expense.expensedesc}--{expense.expenseamount}-{expense.expensedate}</p>
+                {this.state.expenseList.map(function (expense, index) {
+                    return (
+                        <div key={index} style={{ background: '#f5f5f5', height: '50px', verticalAlign: 'middle', alignItems: 'center', alignContent: 'center' }}>
+                            <p key={index}>{expense.expensedesc}--{expense.expenseamount}-{expense.expensedate}</p>
+                        </div>
+                    );
                 })
                 }
 
                 <div></div>
-            </div>
+            </div >
         )
     }
 
