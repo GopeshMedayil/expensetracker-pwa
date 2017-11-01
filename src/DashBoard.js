@@ -10,6 +10,11 @@ class DashBoard extends Component {
     componentDidMount() {
         var startDate = moment().startOf('month').subtract(1, "days").format('YYYY-MM-DD');
         var endDate = moment().endOf('month').add(1, "days").format('YYYY-MM-DD');
+
+        this.calculateExpenses(startDate, endDate)
+
+    }
+    calculateExpenses = function (startDate, endDate) {
         var expenseTotal = 0;
         var incomeTotal = 0;
         db.table('expenses').where('expensedate').between(startDate, endDate).toArray().then((expenses) => {
@@ -19,12 +24,7 @@ class DashBoard extends Component {
             console.log("Expense Amount", expenseTotal)
             this.setState({ expenseTotal });
         });
-        // db.table('expenses')
-        //     .toArray()
-        //     .then((expenses) => {
-        //         console.log("expenses", expenses);
 
-        //     });
         db.table('income').where('incomedate').between(startDate, endDate)
             .toArray()
             .then((income) => {
@@ -34,7 +34,6 @@ class DashBoard extends Component {
                 console.log("incomeTotal", incomeTotal)
                 this.setState({ incomeTotal });
             });
-
     }
     render() {
         return (
