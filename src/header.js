@@ -24,6 +24,7 @@ class Header extends Component {
                     title={this.props.title}
                     className="appbar"
                     onLeftIconButtonTouchTap={this.handleToggle}
+                    color={'red'}
                     zDepth={2}/>
                 <Drawer
                     docked={false}
