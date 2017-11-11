@@ -12,7 +12,8 @@ export default class Expenses extends Component {
         super();
         //console.log("expense List")
         this.state = {
-            expenseList: []
+            expenseList: [],
+            selectValue: moment().month()
         }
 
     }
@@ -22,6 +23,17 @@ export default class Expenses extends Component {
         var currentMonth = moment().month();
         this.getExpenseList();
 
+    }
+    buildMonthList() {
+        var arr = [];
+        var months = moment.months();
+        for (let i = 0; i < months.length; i++) {
+            arr.push(<MenuItem value={i} primaryText={months[i]} key={i}/>)
+        }
+        return arr;
+    }
+    handleChange = (event, index, value) => {
+        this.setState({selectValue: value});
     }
 
     getExpenseList() {
@@ -54,9 +66,12 @@ export default class Expenses extends Component {
                             display: 'flex',
                             width: '75%'
                         }}>
-                            <SelectField hintText="Select a month">
-                                <MenuItem value={1} primaryText="January"/>
-                                <MenuItem value={2} primaryText="February"/>
+                            <SelectField
+                                hintText="Select a month"
+                                value={this.state.selectValue}
+                                onChange={this.handleChange}>
+                                {this.buildMonthList()
+}
                             </SelectField>
                         </div>
                         <div
